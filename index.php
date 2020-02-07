@@ -79,7 +79,7 @@
                 margin-right: 10px;
         }
         .divSSID {
-                w-idth: 140px;
+                width: 140px;
                 display: inline-block;
                 text-align: left;
                 margin-right: 10px;
