@@ -1,6 +1,6 @@
 <? 
 /*
-    Copyright (C) 2013-2016 xtr4nge [_AT_] gmail.com
+    Copyright (C) 2013-2020 xtr4nge [_AT_] gmail.com
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>FruityWiFi</title>
+<title>FruityWiFi : WiFiRecon</title>
 <script src="../js/jquery.js"></script>
 <script src="../js/jquery-ui.js"></script>
 <link rel="stylesheet" href="../css/jquery-ui.css" />
@@ -28,130 +28,78 @@
 <link rel="stylesheet" href="../../../style.css" />
 
 <script src="includes/scripts.js"></script>
-
 <style>
-        .div0 {
-                width: 350px;
-                margin-top: 2px;
-         }
-        .div1 {
-                width: 120px;
-                display: inline-block;
-                text-align: left;
-                margin-right: 10px;
-        }
-        .divName {
-                width: 200px;
-                display: inline-block;
-                text-align: left;
-                margin-right: 10px;
-        }
-        .divEnabled {
-                width: 63px;
-                color: lime;
-                display: inline-block;
-                font-weight: bold;
-        }
-        .divDisabled {
-                width: 63px;
-                color: red;
-                display: inline-block;
-                font-weight: bold;
-        }
-        .divAction {
-                width: 80px;
-                display: inline-block;
-                font-weight: bold;
-        }
-        .divDivision {
-                width: 16px;
-                display: inline-block;
-        }
-        .divStartStopB {
-                width: 34px;
-        }
-        
-        
-        .divBSSID {
-                width: 140px;
-                display: inline-block;
-                text-align: left;
-                margin-right: 10px;
-        }
-        .divSSID {
-                w-idth: 140px;
-                display: inline-block;
-                text-align: left;
-                margin-right: 10px;
-        }
-        
-        .divAP {
-            background-color: #ECECEC;
-            padding-left: 2px;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            border-radius: 5px;
-        }
-        .divCLIENT {
-            background-color: #FEFEFE;
-            padding-left: 2px;
-            padding-top: 4px;
-            padding-bottom: 4px;
-            border-radius: 5px;
-        }
-        
-        /*CIRCLE*/
-        
-        .circle {
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 50%;
-        width: 100%;
-        position: relative;
-        }
-        
-        .circle-border {
-        border: 1px solid black;
-        }
-        
-        .circle-solid{
-        background-color: whitesmoke;
-        }
-        
-        .circle:before {
-        content: "";
-        display: block;
-        padding-top: 100%;
-        }
-        
-        .circle-inner {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        text-align: center;
-        }
-        
-        /* UI-DIALOG COLOR */
-        .ui-widget-content {
-            border: 1px solid #BAC1C4; /* #E01B46 */ /*xtr4nger?*/ /*#BAC1C4*/
-            background: #FFF url(images/ui-bg_flat_100_090909_40x100.png) 50% 50% repeat-x; /* #090909 */ /*xtr4nger?*/
-            color: #000; /* #FFFFFF */ /*xtr4nger?*/
-        }
-        
-        .ui-dialog .ui-dialog-title {
-            float: left;
-            margin: .1em 0;
-            white-space: nowrap;
-            width: 90%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #000000;
-        }
-        
-</style>
+.div0 {
+        width: 350px;
+        margin-top: 2px;
+ }
+.div1 {
+        width: 120px;
+        display: inline-block;
+        text-align: left;
+        margin-right: 10px;
+}
+.divName {
+        width: 200px;
+        display: inline-block;
+        text-align: left;
+        margin-right: 10px;
+}
+.divEnabled {
+        width: 63px;
+        color: lime;
+        display: inline-block;
+        font-weight: bold;
+}
+.divDisabled {
+        width: 63px;
+        color: red;
+        display: inline-block;
+        font-weight: bold;
+}
+.divAction {
+        width: 80px;
+        display: inline-block;
+        font-weight: bold;
+}
+.divDivision {
+        width: 16px;
+        display: inline-block;
+}
+.divStartStopB {
+        width: 34px;
+}
+.divBSSID {
+        width: 140px;
+        display: inline-block;
+        text-align: left;
+        margin-right: 10px;
+}
+.divSSID{
+    width: 140px;
+    display: inline-block;
+    text-align: left;
+    margin-right: 10px;
+}
+.divAP {
+    background-color: #ECECEC;
+    padding-left: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-radius: 5px;
+}
+.divCLIENT{
+background-color: #FEFEFE;
+padding-left: 2px;
+padding-top: 4px;
+padding-bottom: 4px;
+border-radius: 5px;
+}
+.ui-widget-content{
+border: 1px;
+}
 
+</style>
 <script>
 $(function() {
     $( "#action" ).tabs();
@@ -198,16 +146,25 @@ if ($logfile != "" and $action == "delete") {
 <div class="rounded-top" align="left">&nbsp;<b><?=$mod_alias?></b> </div>
 <div class="rounded-bottom">
 
-    &nbsp;&nbsp;&nbsp;version <?=$mod_version?><br>
-    
-    <?
-    $ismoduleup = exec("$mod_isup");
+    &nbsp;version <?=$mod_version?><br>
+
+     <?
+    $ismoduleup = exec($mod_mon0);
     if ($ismoduleup != "") {
-        echo "&nbsp;$mod_alias  <font color='lime'><b>enabled</b></font>.&nbsp; | <a href=\"includes/module_action.php?service=$mod_name&action=stop&page=module\"><b>stop</b></a>";
+        echo "&nbsp;$mod_dep  <font color='lime'><b>enabled</b></font>.&nbsp; | <a href='includes/module_action.php?service=$mod_name&action=stopmon&page=module'><b>stop</b></a>";
     } else { 
-        echo "&nbsp;$mod_alias  <font color='red'><b>disabled</b></font>. | <a href=\"includes/module_action.php?service=$mod_name&action=start&page=module\"><b>start</b></a>"; 
+        echo "&nbsp;$mod_dep  <font color='red'><b>disabled</b></font>. | <a href='includes/module_action.php?service=$mod_name&action=startmon&page=module'><b>start</b></a>"; 
     }
     ?>
+    
+    <?
+    $ismoduleup = exec($mod_isup);
+    if ($ismoduleup != "") {
+        echo "&nbsp;&nbsp;&nbsp;&nbsp;$mod_alias  <font color='lime'><b>enabled</b></font>.&nbsp; | <a href='includes/module_action.php?service=$mod_name&action=stop&page=module'><b>stop</b></a>";
+    } else { 
+        echo "&nbsp;&nbsp;&nbsp;&nbsp;$mod_alias  <font color='red'><b>disabled</b></font>. | <a href='includes/module_action.php?service=$mod_name&action=start&page=module'><b>start</b></a>"; 
+    }
+    ?>  
 
 </div>
 
@@ -239,12 +196,6 @@ Loading, please wait...
             </form>
             <br>
             
-            <script>
-            
-                // BLOCK 1
-            
-            </script>
-            
             <div id="dialog" title="-">
                 <br>
                 <div>Filter</div>
@@ -265,11 +216,11 @@ Loading, please wait...
                
             
             <div id="ap">
-                <div class='divBSSID'><b>BSSID</b>
-                </div><div class='div1'><b>Channel</b>
-                </div><div class='div1'><b>Signal</b>
-                </div><div class='div1'><b>Security</b>
-                </div><div class='divSSID'><b>SSID</b></div>
+                <div class='divBSSID'><b>BSSID</b></div>
+                <div class='div1'><b>Channel</b></div>
+                <div class='div1'><b>Signal</b></div>
+                <div class='div1'><b>Security</b></div>
+                <div class='divSSID'><b>SSID</b></div>
             </div>
             
             <br>
@@ -402,12 +353,7 @@ Loading, please wait...
             <input id="add-ssid" class="btn btn-default btn-sm" type="submit" value="+" onclick="addListSSID()">
             <input id="remove-ssid" class="btn btn-default btn-sm" type="submit" value="-" onclick="removeListSSID()">
             
-            <script>
-                
-                // BLOCK 2
-                
-            </script>
-            
+
         </div>
 
         <!-- END FILTER -->
