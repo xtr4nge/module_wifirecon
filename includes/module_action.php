@@ -1,6 +1,6 @@
 <? 
 /*
-    Copyright (C) 2016 xtr4nge [_AT_] gmail.com
+    Copyright (C) 2020 xtr4nge [_AT_] gmail.com
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ if ($action == "start") {
 	if ($mod_pkt_subtype != "") $options_subtype = "-s $mod_pkt_subtype";
 	if ($mod_pkt_channel != "") $options_channel = "-c $mod_pkt_channel";
 	
-	$exec = "python scan-recon.py -i mon0 $options_type $options_subtype $options_channel -l $mod_logs > /dev/null 2 &";
+	$exec = "screen -d -m python scan-recon.py -i mon0 $options_type $options_subtype $options_channel -l $mod_logs";
 	exec_fruitywifi($exec);
 
 } else if($action == "stop") {
@@ -87,6 +87,13 @@ if ($action == "start") {
 	copyLogsHistory();
 	
 }
+
+if ($action == "startmon") {
+	 start_monitor_mode($io_in_iface_extra);	
+} else if($action == "stopmon") {
+	 stop_monitor_mode($io_in_iface_extra);		
+}
+
 
 
 if ($install == "install_$mod_name") {
